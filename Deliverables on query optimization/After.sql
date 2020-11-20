@@ -2,6 +2,8 @@
 -- Brayden Ruch
 -- Shubham Sharma
 
+use group105;
+
 DROP PROCEDURE if exists q3;
 DELIMITER &&
 
