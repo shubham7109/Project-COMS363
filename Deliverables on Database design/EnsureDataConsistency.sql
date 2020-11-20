@@ -1,6 +1,8 @@
 -- author group 105 
 -- Brayden Ruch
 -- Shubham Sharma
+SET SQL_SAFE_UPDATES=0;
+use group105;
 UPDATE users SET state = 'AL' WHERE state like 'ALABAMA';
 UPDATE users SET state = 'AK' WHERE state like 'Alaska';
 UPDATE users SET state = 'AZ' WHERE state like 'ARIZONA';
@@ -55,3 +57,5 @@ UPDATE users SET state = 'WV' WHERE state like 'WEST VIRGINIA';
 UPDATE users SET state = 'IN' WHERE state like 'INDIANA';
 UPDATE users SET state = 'WI' WHERE state like 'WISCONSIN';
 UPDATE users SET state = 'WY' WHERE state like 'WYOMING';
+
+SET SQL_SAFE_UPDATES=1;
