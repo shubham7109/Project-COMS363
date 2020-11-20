@@ -1,7 +1,7 @@
 -- author group 105 
 -- Brayden Ruch
 -- Shubham Sharma
-
+set SQL_SAFE_UPDATES=0;
 SET GLOBAL innodb_buffer_pool_size=2147483648; -- 2GB q23 and q3
 
 CREATE index tid on hastags (tid); -- for q7
@@ -15,3 +15,4 @@ create index months on tweets(DateMonth);
 ALTER TABLE tweets ADD column DateYear int;
 update tweets set DateYear = year(createdTime);
 create index years on tweets(DateYear);
+set SQL_SAFE_UPDATES=1;
