@@ -138,41 +138,78 @@ public class MainJDBCProject {
         }
     }
 
+    /**
+     * Inserts a new user to the Users table.
+     * @param conn
+     */
     private static void insertNewUser(Connection conn) {
         if (conn==null) throw new NullPointerException();
-
-        String numHashtagsString = "";
-        String yearString = "";
-
-        while(!isInteger(yearString)){
-            yearString = JOptionPane.showInputDialog("Enter the year: ");
-        }
-
-        while(!isInteger(numHashtagsString)){
-            numHashtagsString = JOptionPane.showInputDialog("Enter number of hashtags to find: ");
-        }
-
         try {
-            ResultSet rs;
+
+            String screenName = "";
+            String name = "";
+            String sub_category = "";
+            String category = "";
+            String ofstate = "";
+            String numFollowers = "";
+            String numFollowing = "";
+
+            while(screenName.equals("")){
+                screenName = JOptionPane.showInputDialog("Enter user screen name:");
+            }
+
+            while(name.equals("")){
+                name = JOptionPane.showInputDialog("Enter user full name:");
+            }
+
+            while(sub_category.equals("")){
+                sub_category = JOptionPane.showInputDialog("Enter user sub_category:");
+            }
+
+            while(category.equals("")){
+                category = JOptionPane.showInputDialog("Enter user category:");
+            }
+
+            while(ofstate.equals("")){
+                ofstate = JOptionPane.showInputDialog("Enter user state:");
+            }
+
+            while(!isInteger(numFollowers)){
+                numFollowers = JOptionPane.showInputDialog("Enter number user followers:");
+            }
+
+            while(!isInteger(numFollowing)){
+                numFollowing = JOptionPane.showInputDialog("Enter number user following:");
+            }
+
             // we want to make sure that all the query and update statements
             // are considered as one unit; both got done or none got done
             conn.setAutoCommit(false);
 
-            CallableStatement  inststmt = conn.prepareCall("{CALL q3(?,?)}");
+            PreparedStatement inststmt = conn.prepareStatement(
+            " insert into users (name,screen_name, numFollowers, numFollowing, category, subcategory, state) values(?,?,?,?,?,?,?)");
+            inststmt.setString(1, name);
+            inststmt.setString(2, screenName);
+            inststmt.setInt(3, Integer.parseInt(numFollowers));
+            inststmt.setInt(4, Integer.parseInt(numFollowing));
+            inststmt.setString(5, category);
+            inststmt.setString(6, sub_category);
+            inststmt.setString(7, ofstate);
 
-            inststmt.setInt(1, Integer.parseInt(numHashtagsString));
-            inststmt.setInt(2, Integer.parseInt(yearString));
+            int rowcount = inststmt.executeUpdate();
 
-            rs = inststmt.executeQuery();
-            buildTableModel(rs,"Hashtags in the most number of states");
+            System.out.println("Number of rows updated:" + rowcount);
+            JOptionPane.showMessageDialog(null, "Rows updated in Users table: "+ rowcount);
 
             inststmt.close();
             // confirm that these are the changes you want to make
             conn.commit();
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            // if other parts of the program needs commit per SQL statement
+            // conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
     }
 
     /**
