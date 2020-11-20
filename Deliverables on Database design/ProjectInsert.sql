@@ -1,7 +1,7 @@
 -- author group 105 
 -- Brayden Ruch
 -- Shubham Sharma
-
+use group105;
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/tweets.csv' REPLACE INTO TABLE `tweets`
 FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n'
 IGNORE 1 LINES
