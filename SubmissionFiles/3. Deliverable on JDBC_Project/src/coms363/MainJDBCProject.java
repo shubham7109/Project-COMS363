@@ -9,9 +9,11 @@ import java.util.Arrays;
 import java.util.Vector;
 
 /**
- * MainJDBCProject for COMS363 Final Project
+ * Run MainJDBCProject for COMS363 Final Project
  * Make sure to add the mysql-connector-java-8.0.22.jar to as a dependency
- * @author Shubham Sharma and Brayden Ruch
+ * Java Project is built using Intellij on Java version 11.
+ * Follow instructions on screen while running to execute project tasks. 
+ * @authors Shubham Sharma and Brayden Ruch
  * DB LOGIN INFO:
  * Username: cs363
  * Password: 363F2020
