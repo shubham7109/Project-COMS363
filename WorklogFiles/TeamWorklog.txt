@@ -1,6 +1,10 @@
+Week of October 19
+
+  -Team meeting in morning (45 minutes) to introduce ourselves and go over project
+  
 Week of October 26
 
-  -Team meeting in afternoon (20 minutes) to determine tasks
+  -Team meeting in afternoon (20 minutes) to assign tasks
   
   *Brayden's tasks:
     \Implement the ER diagram into database relations
@@ -11,10 +15,34 @@ Week of October 26
     
 Week of November 2
 
-  -Team meeting in evening (20 minutes) to determine next steps
+  -Team meeting in evening (30 minutes) to determine next steps
   
   *Brayden's tasks:
     \Implement ensuredataconsistency createdbusers and finish up insert
+    \start writing queries
   *Shubham's tasks:
     /Check Brayden's implementations and test run the files
     \continue work on JDBC application interface
+
+Week of November 9
+
+  -Team meeting in morning (15 minutes) to determine next steps
+  
+  *Brayden's tasks:
+    \Write queries without indexing and optimization + log times
+    \Create physical design statements to optimize queries
+  *Shubham's tasks:
+    /Check Brayden's implementations and test run the files
+    \continue work on JDBC application interface
+    
+Week of November 16
+
+  -Team meeting in evening (2 hours) to finish up project
+  
+  *Brayden's tasks:
+    \Finish Query optimization implements + log times
+    \Create procedures for jdbc to utilize
+    \Put project files together
+  *Shubham's tasks:
+    \finish work on JDBC application interface
+    \put project files together
