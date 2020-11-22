@@ -1,0 +1,20 @@
+Week of October 26
+
+  -Team meeting in afternoon (20 minutes) to determine tasks
+  
+  *Brayden's tasks:
+    \Implement the ER diagram into database relations
+    \Insert the data into the database with project insert.sql
+  *Shubham's tasks:
+    /Check Brayden's work on ddl and insert
+    \Start work on JDBC application interface
+    
+Week of November 2
+
+  -Team meeting in evening (20 minutes) to determine next steps
+  
+  *Brayden's tasks:
+    \Implement ensuredataconsistency createdbusers and finish up insert
+  *Shubham's tasks:
+    /Check Brayden's implementations and test run the files
+    \continue work on JDBC application interface
