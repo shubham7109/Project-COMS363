@@ -1,0 +1,30 @@
+Week of October 26
+
+  -Analyzed the ER diagram
+  -Started and Completed the ProjectDDL.sql
+  -Sent to Shubham for analysis
+  -Started ProjectInsert.sql
+
+Week of November 2
+
+  -Completed projectInsert.sql
+  -Started and completed ensureDataConsistency.sql
+  -Started and completed CreateDBUsers.sql
+  -Sent to Shubham for analysis
+  -Started analyzing the queries
+  
+Week of November 9
+
+  -Wrote the queries described without indexing
+  -logged query execution times and looked at their plans.
+  -started looking at techniques to implement query optimization
+  -Created physical design sql statements to make indexes and increase buffer pool
+  -entered optimization methods to implement in the perfsql.pdf
+  
+Week of November 16
+
+  -finished implementation of query optimization methods
+  -started after.sql and altered my queries to use new methods.
+  -logged times of optimized queries and finished up PerfSQL.pdf
+  -Collaborated with shubham to create procedures for him to use on the jdbc side.
+  -finished up the project!
