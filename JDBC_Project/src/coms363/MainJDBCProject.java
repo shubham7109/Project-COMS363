@@ -4,13 +4,17 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.sql.*;
 import java.util.Vector;
 
+/**
+ * MainJDBCProject for COMS363 Final Project
+ * Make sure to add the mysql-connector-java-8.0.22.jar to as a dependency
+ * @author Shubham Sharma and Brayden Ruch
+ * DB LOGIN INFO:
+ * Username: cs363
+ * Password: 363F2020
+ */
 public class MainJDBCProject {
 
     /**
@@ -23,10 +27,12 @@ public class MainJDBCProject {
         String password;
 
         String[] result = loginDialog();
-        //userName = result[0];
-        //password = result[1];
-        userName = "cs363";
-        password = "363F2020";
+        userName = result[0];
+        password = result[1];
+
+        //For testing purposes
+        //userName = "cs363";
+        //password = "363F2020";
 
         Connection conn;
         Statement stmt;
@@ -101,46 +107,89 @@ public class MainJDBCProject {
         }
     }
 
+    /**
+     * Deletes the user from relevant tables.
+     * @param conn Connection object to the DB
+     */
     private static void deleteUser(Connection conn) {
         if (conn==null) throw new NullPointerException();
-
-        String numHashtagsString = "";
-        String yearString = "";
-
-        while(!isInteger(yearString)){
-            yearString = JOptionPane.showInputDialog("Enter the year: ");
-        }
-
-        while(!isInteger(numHashtagsString)){
-            numHashtagsString = JOptionPane.showInputDialog("Enter number of hashtags to find: ");
-        }
-
         try {
-            ResultSet rs;
+            String screen_name = "";
+            while(screen_name.trim().equals("")){
+                screen_name = JOptionPane.showInputDialog("screen_name to be deleted:");
+            }
+
+            String confirmResponse = "";
+            while(!confirmResponse.equals("y") && !confirmResponse.equals("n")){
+                confirmResponse = JOptionPane.showInputDialog("CONFIRM: (y/n)");
+            }
+
+            if(confirmResponse.equals("n"))
+                return;
+
             // we want to make sure that all the query and update statements
             // are considered as one unit; both got done or none got done
             conn.setAutoCommit(false);
+            int rowcount = 0;
 
-            CallableStatement  inststmt = conn.prepareCall("{CALL q3(?,?)}");
+            // Disable foreign keys check
+            Statement stmt = conn.createStatement();
+            stmt.execute("SET FOREIGN_KEY_CHECKS=0");
+            stmt.close();
 
-            inststmt.setInt(1, Integer.parseInt(numHashtagsString));
-            inststmt.setInt(2, Integer.parseInt(yearString));
 
-            rs = inststmt.executeQuery();
-            buildTableModel(rs,"Hashtags in the most number of states");
-
+            //Deletes all the hashtags from the hastag table
+            PreparedStatement inststmt = conn.prepareStatement(" DELETE FROM hasurls WHERE hasurls.tid IN ( SELECT t.tid FROM tweets t WHERE t.posted_user = ?) ");
+            inststmt.setString(1, screen_name);
+            rowcount += inststmt.executeUpdate();
             inststmt.close();
+
+            //Deletes all the hashtags from the hastag table
+            inststmt = conn.prepareStatement(" DELETE FROM hastags WHERE hastags.tid IN ( SELECT t.tid FROM tweets t WHERE t.posted_user = ?) ");
+            inststmt.setString(1, screen_name);
+            rowcount += inststmt.executeUpdate();
+            inststmt.close();
+
+            inststmt = conn.prepareStatement(" delete from mentions where screen_name=? ");
+            inststmt.setString(1, screen_name);
+            rowcount += inststmt.executeUpdate();
+            inststmt.close();
+
+            inststmt = conn.prepareStatement(" delete from posts where screen_name=? ");
+            inststmt.setString(1, screen_name);
+            rowcount += inststmt.executeUpdate();
+            inststmt.close();
+
+            //Deletes all the tweets the user has tweeted
+            inststmt = conn.prepareStatement(" delete from tweets where posted_user=? ");
+            inststmt.setString(1, screen_name);
+            rowcount += inststmt.executeUpdate();
+            inststmt.close();
+
+            inststmt = conn.prepareStatement(" delete from users where screen_name=? ");
+            inststmt.setString(1, screen_name);
+            rowcount += inststmt.executeUpdate();
+            inststmt.close();
+
+            // Enable foreign keys check
+            stmt = conn.createStatement();
+            stmt.execute("SET FOREIGN_KEY_CHECKS=1");
+            stmt.close();
+
+            JOptionPane.showMessageDialog(null, "Number of rows updated: " + rowcount);
+
             // confirm that these are the changes you want to make
             conn.commit();
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            // if other parts of the program needs commit per SQL statement
+            // conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     /**
      * Inserts a new user to the Users table.
-     * @param conn
+     * @param conn Connection object to the DB
      */
     private static void insertNewUser(Connection conn) {
         if (conn==null) throw new NullPointerException();
@@ -214,7 +263,7 @@ public class MainJDBCProject {
 
     /**
      * Q23
-     * @param conn
+     * @param conn Connection object to the DB
      */
     private static void mostHashtagsInCategories(Connection conn) {
         if (conn==null) throw new NullPointerException();
@@ -267,7 +316,7 @@ public class MainJDBCProject {
 
     /**
      * Q18
-     * @param conn
+     * @param conn Connection object to the DB
      */
     private static void mostMentions(Connection conn) {
         if (conn==null) throw new NullPointerException();
@@ -320,7 +369,7 @@ public class MainJDBCProject {
 
     /**
      * Q16
-     * @param conn
+     * @param conn Connection object to the DB
      */
     private static void namesAndCategories(Connection conn) {
         if (conn==null) throw new NullPointerException();
@@ -367,7 +416,7 @@ public class MainJDBCProject {
 
     /**
      * Q9
-     * @param conn
+     * @param conn Connection object to the DB
      */
     private static void topFollowedUsers(Connection conn) {
         if (conn==null) throw new NullPointerException();
@@ -410,7 +459,7 @@ public class MainJDBCProject {
 
     /**
      * Q7
-     * @param conn
+     * @param conn Connection object to the DB
      */
     private static void findHashtagsInGivenState(Connection conn) {
         if (conn==null) throw new NullPointerException();
@@ -472,7 +521,7 @@ public class MainJDBCProject {
 
     /**
      * Q3
-     * @param conn
+     * @param conn Connection object to the DB
      */
     private static void findHashtagsInMostStates(Connection conn) {
         if (conn==null) throw new NullPointerException();
@@ -512,6 +561,11 @@ public class MainJDBCProject {
 
     }
 
+    /**
+     * Builds a table view and displays it
+     * @param rs ResultSet to parse through and display columns
+     * @param message Message to title the Pane window dialog.
+     */
     public static void buildTableModel(ResultSet rs, String message) throws SQLException {
 
         ResultSetMetaData metaData = rs.getMetaData();
