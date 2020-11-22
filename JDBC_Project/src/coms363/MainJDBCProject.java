@@ -5,6 +5,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.Vector;
 
 /**
@@ -34,7 +35,7 @@ public class MainJDBCProject {
         //userName = "cs363";
         //password = "363F2020";
 
-        Connection conn;
+        Connection conn = null;
         Statement stmt;
         if (result[0]==null || result[1]==null) {
             System.out.println("Terminating: No username nor password is given");
@@ -42,7 +43,14 @@ public class MainJDBCProject {
         }
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(dbServer, userName, password);
+            try{
+
+                conn = DriverManager.getConnection(dbServer, userName, password);
+            }catch (Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error logging in (View stacktrace for more info): \n" + e.getMessage());
+                System.exit(-1);
+            }
             stmt = conn.createStatement();
 
             String option;
