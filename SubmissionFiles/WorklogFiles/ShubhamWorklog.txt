@@ -1,0 +1,29 @@
+Week of October 26
+
+  -Analyzed the ER diagram
+  -Analyzed ProjectDDL.sql and works to documentation specs
+  -Started working JDBC project
+
+Week of November 2
+
+  -Created UI interactions for JDBC
+  -Login handler works according to specs
+  -Starting work on interaction with user. 
+  -Setting up query execution methods.
+  -Started analyzing the queries
+  -Reviewed teammates progress.
+  
+Week of November 9
+
+  -Finished Q3, Q7, Q9
+  -Working on error handling
+  -Setting up a table for better viewability
+  -Testing procedure functions. Looks correct as per to posted results
+  
+Week of November 16
+
+  -Worked and verified the optimization files. 
+  -Verified the procedure functions.
+  -Finished Q16, Q18, Q23.
+  -Finished and tested insertion and deletion calls. 
+  -finished up the project!
